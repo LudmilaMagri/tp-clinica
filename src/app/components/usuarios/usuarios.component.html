@@ -1,0 +1,206 @@
+<div class="container">
+    <!-- Pacientes -->
+    <div class="card p-3 mb-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-title">
+                    <div class="row">
+                        <h3>Pacientes:</h3>
+                        <div *ngIf="cargando" class="spinner-border ml-3" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered" #tablaUno>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Edad</th>
+                        <th>DNI</th>
+                        <th>Obra Social</th>
+                        <th>Email</th>
+                        <th>Imagen perfil 1</th>
+                        <th>Imagen perfil 2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let element of listaPacientes">
+                        <td style="font-size: 20px;">{{element.nombre}}</td>
+                        <td style="font-size: 20px;">{{element.apellido}}</td>
+                        <td style="font-size: 20px;">{{element.edad}}</td>
+                        <td style="font-size: 20px;">{{element.dni}}</td>
+                        <td style="font-size: 20px;">{{element.obraSocial}}</td>
+                        <td style="font-size: 20px;">{{element.email}}</td>
+                        <td style="font-size: 20px;">
+                            <a style="display: none;" href={{element.urlFotos[0]}} target="_blank">Ver imagen</a>
+                            <img [src]="element.urlFotos[0]" [alt]="element.urlFotos[0]" height="50px" width="auto">
+                        </td>
+                        <td style="font-size: 20px;">
+                            <a style="display: none;" href={{element.urlFotos[1]}} target="_blank">Ver imagen</a>
+                            <img [src]="element.urlFotos[1]" [alt]="element.urlFotos[1]" height="50px" width="auto">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-12 col-md-12 mt-3">
+            <div class="form-box subject-icon">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pacienteModal">
+                    Agregar paciente
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Especialistas -->
+    <div class="card p-3 mb-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-title">
+                    <div class="row">
+                        <h3>Especialistas:</h3>
+                        <div *ngIf="cargando" class="spinner-border ml-3" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered" #tablaDos>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Edad</th>
+                        <th>DNI</th>
+                        <th>Especialidades</th>
+                        <th>Email</th>
+                        <th>Imagen perfil</th>
+                        <th>Aprobado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let element of listaEspecialistas">
+                        <td style="font-size: 20px;">{{element.nombre}}</td>
+                        <td style="font-size: 20px;">{{element.apellido}}</td>
+                        <td style="font-size: 20px;">{{element.edad}}</td>
+                        <td style="font-size: 20px;">{{element.dni}}</td>
+                        <td>
+                            <button type="button" class="btn btn-dark" data-toggle="tooltip" data-placement="top"
+                                title="Ver especialidades" (click)="verEspecialidades(element)">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </td>
+                        <td style="font-size: 20px;">{{element.email}}</td>
+                        <td style="font-size: 20px;">
+                            <a style="display: none;" href={{element?.urlFoto}} target="_blank">Ver imagen</a>
+                            <img [src]="element?.urlFoto" alt="" height="50px" width="auto">
+                        </td>
+                        <td>
+                            <input type="checkbox" class="custom-checkbox" (change)="habilitarEspecialista(element)"
+                                [checked]="element.cuentaHabilitada">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-12 col-md-12 mt-3">
+            <div class="form-box subject-icon">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#especialistasModal">
+                    Agregar Especialista
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Administradores -->
+    <div class="card p-3 mb-3">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-title">
+                    <div class="row">
+                        <h3>Administradores:</h3>
+                        <div *ngIf="cargando" class="spinner-border ml-3" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered" #tablaTres>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Edad</th>
+                        <th>DNI</th>
+                        <th>Email</th>
+                        <th>Imagen perfil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let element of listaAdministradores">
+                        <td style="font-size: 20px;">{{element.nombre}}</td>
+                        <td style="font-size: 20px;">{{element.apellido}}</td>
+                        <td style="font-size: 20px;">{{element.edad}}</td>
+                        <td style="font-size: 20px;">{{element.dni}}</td>
+                        <td style="font-size: 20px;">{{element.email}}</td>
+                        <td style="font-size: 20px;">
+                            <a style="display: none;" href={{element.urlFoto}} target="_blank">Ver imagen</a>
+                            <img [src]="element.urlFoto" alt="" height="50px" width="auto">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-12 col-md-12 mt-3">
+            <div class="form-box subject-icon">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adminModal">
+                    Agregar Admin
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Pacientes -->
+<div class="modal fade" id="pacienteModal" #pacienteModal tabindex="-1" role="dialog" aria-labelledby="pacienteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <app-paciente-form></app-paciente-form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Especialistas -->
+<div class="modal fade" id="especialistasModal" #especialistasModal tabindex="-1" role="dialog" aria-labelledby="especialistasModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <app-especialista-form></app-especialista-form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!-- Modal Especialistas -->
+<div class="modal fade" id="adminModal" #adminModal tabindex="-1" role="dialog" aria-labelledby="adminModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <app-admin-form></app-admin-form>
+            </div>
+        </div>
+    </div>
+</div>

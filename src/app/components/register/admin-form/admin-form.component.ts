@@ -1,0 +1,91 @@
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../../servicess/auth.service';
+import { FirestoreService } from '../../../servicess/firestore.service';  
+import Swal from 'sweetalert2';
+import { ROLES_ENUM } from '../../../enums/roles';
+import { Administradr } from '../../../models/models';
+@Component({
+  selector: 'app-admin-form',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule
+  ],
+  templateUrl: './admin-form.component.html',
+  styleUrl: './admin-form.component.scss'
+})
+export class AdminFormComponent {
+  form!: FormGroup;
+  imagenes : any;
+  yaCargo : boolean = false;
+  constructor(private authService: AuthService, private firestoreService: FirestoreService) {}
+  ngOnInit() {
+    this.form = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      clave: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
+      nombre: new FormControl('', [Validators.required]),
+      apellido: new FormControl('', [Validators.required]),
+      edad: new FormControl('', [
+        Validators.required,
+        Validators.min(18),
+        Validators.max(99),
+      ]),
+      dni: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]{1,3}?[0-9]{3,3}?[0-9]{3,3}$'),
+      ])
+    });
+  }
+  imagenCargada(event :any){
+    const input = event.target as HTMLInputElement;
+    this.imagenes = input.files;
+  }
+  async registrar() {
+    const dniExiste = await this.firestoreService.existeDni(this.form.value.dni, 'administradores');
+    if (dniExiste) {
+      Swal.fire({
+        icon: 'error',
+        title: 'El dni ingresado ya existe',
+      });
+      return;
+    }
+    if (this.form.valid && (this.imagenes ? this.imagenes.length : 0 ) === 1) {
+      Swal.fire({
+        title: 'Cargando...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading(null);
+        },
+      });
+      let credenciales = await this.authService.SingUp(
+        this.form.value.email,
+        this.form.value.clave,
+        'Administrador'
+      );
+      console.log("credenciales",credenciales);
+      let fotos: string;
+      fotos = await this.firestoreService.guardarFoto(this.imagenes[0], "usuarios");
+      let paciente: Administradr = {
+        id: credenciales,
+        nombre: this.form.value.nombre,
+        apellido: this.form.value.apellido,
+        edad: this.form.value.edad,
+        dni: this.form.value.dni,
+        email: this.form.value.email,
+        password: this.form.value.clave,
+        cuentaHabilitada: false,
+        urlFoto: fotos,
+        rol: ROLES_ENUM.PACIENTE,
+      };
+      console.log("paciente", paciente);
+      this.firestoreService.save(paciente, 'administradores');
+      this.form.reset();
+      Swal.close();
+    } else {
+      Swal.fire('ERROR', 'Verifique el formulario antes de enviar', 'error');
+    }
+  }
+}

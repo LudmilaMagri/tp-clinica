@@ -1,0 +1,118 @@
+// Modal
+.modal {
+    &.fade {
+      transition: opacity 0.3s ease;
+    }
+  
+    .modal-dialog {
+      max-width: 800px;
+      margin: 1.75rem auto; // Centrado y margen automático
+    }
+  
+    .modal-content {
+      border-radius: 8px; // Bordes redondeados para un look más suave
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); // Sombra para dar profundidad
+      padding: 20px;
+    }
+  
+    .modal-header {
+      border-bottom: 1px solid #e9ecef;
+      padding-bottom: 15px;
+      
+      .modal-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #495057;
+      }
+    }
+  
+    .modal-body {
+      max-height: calc(100vh - 210px); // Para que la tabla y el formulario se ajusten al contenido
+      overflow-y: auto;
+  
+      h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #007bff;
+      }
+  
+      .table-responsive {
+        margin-top: 20px;
+        
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          
+          th, td {
+            padding: 10px;
+            text-align: left;
+          }
+          
+          th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #495057;
+          }
+  
+          td {
+            font-size: 1rem;
+            color: #212529;
+          }
+  
+          input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+  
+      .form-group {
+        margin-top: 20px;
+  
+        label {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #495057;
+        }
+  
+        input.form-control {
+          font-size: 1rem;
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid #ced4da;
+        }
+  
+        .error-message {
+          color: red;
+          font-size: 0.9rem;
+          margin-top: 5px;
+        }
+      }
+    }
+  
+    .modal-footer {
+      border-top: 1px solid #e9ecef;
+      padding-top: 15px;
+      
+      .btn {
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 5px;
+      }
+  
+      .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+      }
+  
+      .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+  
+      .btn:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+  

@@ -1,0 +1,82 @@
+<div id="container" class="container-fluid d-flex justify-content-center align-items-center">
+  <div class="form-wrapper bg-light border rounded p-3 w-100 mx-3" style="max-width: 600px;">
+    <div class="form-title text-center mb-4">
+      <h2>Registro - Pacientes</h2>
+    </div>
+    <form [formGroup]="form">
+      <div class="row">
+        <!-- Columna izquierda -->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
+            <div *ngIf="form.controls['email'].touched && form.controls['email'].invalid" class="text-danger">
+              <small *ngIf="form.controls['email'].errors?.['required']">Email es requerido</small>
+              <small *ngIf="form.controls['email'].errors?.['email']">Email invalido</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre">
+            <div *ngIf="form.controls['nombre'].touched && form.controls['nombre'].invalid" class="text-danger">
+              <small *ngIf="form.controls['nombre'].errors?.['required']">Nombre es requerido</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="edad">Edad</label>
+            <input type="number" class="form-control" id="edad" formControlName="edad" placeholder="Edad">
+            <div *ngIf="form.controls['edad'].touched && form.controls['edad'].invalid" class="text-danger">
+              <small *ngIf="form.controls['edad'].errors?.['required']">Edad es requerido</small>
+              <small *ngIf="form.controls['edad'].errors?.['min'] || form.controls['edad'].errors?.['max']">Edad entre
+                18 y 99 años</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="input-field" for="images">Imágenes de perfil:</label>
+            <input class="input-field" type="file" (change)="imagenCargada($event)" id="images" name="images" multiple>
+            <span *ngIf="(this.imagenes ? this.imagenes.length : 0 ) !== 2 && yaCargo" style="color: red;">
+              2 imagenes son requeridas
+            </span>
+          </div>
+        </div>
+        <!-- Columna derecha -->
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="clave">Clave</label>
+            <input type="password" class="form-control" id="clave" formControlName="clave" placeholder="Clave">
+            <div *ngIf="form.controls['clave'].touched && form.controls['clave'].invalid" class="text-danger">
+              <small *ngIf="form.controls['clave'].errors?.['required']">Clave es requerido</small>
+              <small *ngIf="form.controls['clave'].errors?.['minlength']">Minimo 6 caracteres</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="apellido">Apellido</label>
+            <input type="text" class="form-control" id="apellido" formControlName="apellido" placeholder="Apellido">
+            <div *ngIf="form.controls['apellido'].touched && form.controls['apellido'].invalid" class="text-danger">
+              <small *ngIf="form.controls['apellido'].errors?.['required']">Apellido es requerido</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="dni">DNI</label>
+            <input type="number" class="form-control" id="dni" formControlName="dni" placeholder="DNI">
+            <div *ngIf="form.controls['dni'].touched && form.controls['dni'].invalid" class="text-danger">
+              <small *ngIf="form.controls['dni'].errors?.['required']">DNI es requerido</small>
+              <small *ngIf="form.controls['dni'].errors?.['pattern']">DNI invalido</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="obraSocial">Obra social</label>
+            <input type="text" class="form-control" id="obraSocial" formControlName="obraSocial"
+              placeholder="Obra social">
+            <div *ngIf="form.controls['obraSocial'].touched && form.controls['obraSocial'].invalid" class="text-danger">
+              <small *ngIf="form.controls['obraSocial'].errors?.['required']">Obra social es requerido</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary" (click)="registrar()">Registrarse</button>
+      </div>
+    </form>
+  </div>
+</div>

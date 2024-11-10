@@ -1,0 +1,45 @@
+<div class="modal fade show" tabindex="-1" style="display: block;" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Especialidades</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h3>Especialidades cargadas:</h3>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Especialidad</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let especialidad of especialidadesFromDB">
+                  <td style="font-size: 20px;">{{especialidad.especialidad}}</td>
+                  <td>
+                    <input type="checkbox" class="custom-checkbox" (change)="onEspecialidadChange(especialidad)"  [checked]="especialidad.estaMarcado">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <form [formGroup]="form">
+            <div class="form-group mt-3">
+              <label for="especialidad">Alta de especialidad</label>
+              <input id="especialidad" class="form-control" type="text" formControlName="especialidad" name="especialidad" placeholder="Especialidad">
+              <div *ngIf="form.controls['especialidad'].errors?.['required'] && form.controls['especialidad'].touched" style="color: red;">Especialidad es requerido</div>
+            </div>
+            <button class="btn btn-primary mt-3" (click)="agregarEspecialidadBd()">Agregar especialidad</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="onClose()">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>

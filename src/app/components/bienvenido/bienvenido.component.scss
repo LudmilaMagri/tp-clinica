@@ -1,0 +1,88 @@
+// #welcome-container {
+//     height: 100%;
+//     min-height: 80vh;
+//     background-image: url('../../../assets/back.jpg');
+//     background-repeat: no-repeat;
+//     background-size:cover;
+// }
+
+/* Estilos generales */
+#welcome-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('../../../assets/back.jpg'); /* Reemplaza con tu URL de fondo */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    color: #ffffff;
+    text-align: center;
+    padding: 0 20px;
+}
+
+#welcome-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro transparente */
+    z-index: 1;
+}
+
+#text-container {
+    position: relative;
+    z-index: 2;
+}
+
+#text-container .container {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Títulos */
+#text-container h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: #f8f9fa;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Párrafos */
+#text-container p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #f8f9fa;
+    margin-bottom: 15px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+/* Animación para el título */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    #text-container h1 {
+        font-size: 2rem;
+    }
+
+    #text-container p {
+        font-size: 1rem;
+    }
+}

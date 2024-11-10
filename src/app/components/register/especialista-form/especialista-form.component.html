@@ -1,0 +1,92 @@
+<div id="container" class="container-fluid d-flex justify-content-center align-items-center">
+  <div class="form-wrapper bg-light border rounded p-3 w-100 mx-3" style="max-width: 600px;">
+    <div class="form-title text-center mb-4">
+      <h2>Registro - Especialistas</h2>
+    </div>
+    <form id="contact-form" [formGroup]="form">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 mb-3">
+          <div class="form-box subject-icon">
+            <input appFocusBorder class="input-field form-control" type="Email" formControlName="email" name="email"
+              placeholder="Email">
+            <div *ngIf="form.controls['email'].errors?.['required'] && form.controls['email'].touched"
+              style="color: red;"> Email es requerido</div>
+            <div *ngIf="form.controls['email'].errors?.['email'] && form.controls['email'].touched" style="color: red;">
+              Email invalido</div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 mb-3">
+          <div class="form-box subject-icon">
+            <input appFocusBorder class="input-field form-control" type="password" formControlName="clave" name="clave"
+              placeholder="Clave">
+            <div *ngIf="form.controls['clave'].errors?.['required'] && form.controls['clave'].touched"
+              style="color: red;"> Clave es requerido</div>
+            <div *ngIf="form.controls['clave'].errors?.['minlength'] && form.controls['clave'].touched"
+              style="color: red;"> Minimo 6 caracteres</div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 mb-3">
+          <div class="form-box user-icon">
+            <input appFocusBorder class="input-field form-control" type="text" formControlName="nombre" name="nombre"
+              placeholder="Nombre">
+            <div *ngIf="form.controls['nombre'].errors?.['required'] && form.controls['nombre'].touched"
+              style="color: red;"> Nombre es requerido</div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 mb-3">
+          <div class="form-box email-icon">
+            <input appFocusBorder class="input-field form-control" type="text" formControlName="apellido"
+              name="apellido" placeholder="Apellido">
+            <div *ngIf="form.controls['apellido'].errors?.['required'] && form.controls['apellido'].touched"
+              style="color: red;"> Apellido es requerido</div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 mb-3">
+          <div class="form-box subject-icon">
+            <input appFocusBorder class="input-field form-control" type="number" formControlName="edad" name="edad"
+              placeholder="Edad">
+            <div *ngIf="form.controls['edad'].errors?.['required'] && form.controls['edad'].touched"
+              style="color: red;"> Edad es requerido</div>
+            <div
+              *ngIf="(form.controls['edad'].errors?.['min'] || form.controls['edad'].errors?.['max']) && form.controls['edad'].touched"
+              style="color: red;"> Edad entre 18 y 99 años</div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 mb-3">
+          <div class="form-box subject-icon">
+            <input appFocusBorder class="input-field form-control" type="text" formControlName="dni" name="dni"
+              placeholder="DNI">
+            <div *ngIf="form.controls['dni'].errors?.['required'] && form.controls['dni'].touched" style="color: red;">
+              DNI es requerido</div>
+            <div *ngIf="form.controls['dni'].errors?.['pattern'] && form.controls['dni'].touched" style="color: red;">
+              DNI invalido</div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 mb-3">
+          <div class="form-box subject-icon">
+            <label class="input-field" for="images">Imágenes de perfil:</label>
+            <input class="input-field form-control" type="file" (change)="imagenCargada($event)" id="images" name="images" >
+            <span *ngIf="(this.imagenes ? this.imagenes.length : 0 ) !== 1 && yaCargo" style="color: red;">
+              1 imagenes son requeridas
+            </span>
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-12 mb-3">
+          <div class="form-box subject-icon">
+            <button class="btn btn-primary" (click)="abrirModalEspecialidades()">Seleccionar especialidades</button>
+          </div>
+          <span *ngIf="this.especialidadesSeleccionadas.length < 1" style="color: red;"> Debe
+            seleccionar minimo 1 especialidad</span>
+        </div>
+        <div class="col-lg-12 mt-3">
+          <div class="submit-info" style="float: right;">
+            <button class="btn btn btn-success" (click)="registrarse()">Registrase<i class="ti-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<app-especialidades *ngIf="showModal" (especialidadesSeleccionadasEvent)="onEspecialidadesSeleccionadas($event)"
+  (cerrarModal)="cerrarModal()"></app-especialidades>
