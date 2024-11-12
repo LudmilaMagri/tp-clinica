@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="encuestaModalLabel">Encuesta</h5>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+        <h2>Experiencia con el especialista</h2>
+      
+        <div class="mb-3">
+          <label for="calificacion" class="form-label">1. En una escala del 1 al 10, ¿cómo calificaría su experiencia general con la clínica en línea?</label>
+          <div class="rating">
+            <input type="range" class="form-range" min="1" max="10" step="1" formControlName="calificacion" #itemHeight>
+            <span>Puntuación seleccionada: {{ itemHeight.value }}</span>
+          </div>
+        </div>
+      
+        <div class="mb-3">
+          <label for="comentario" class="form-label">2. ¿Tiene algún comentario adicional sobre su experiencia con el especialista?</label>
+          <textarea class="form-control" id="comentario" rows="3" formControlName="comentario"></textarea>
+        </div>
+      
+        <button type="button" class="btn btn-primary mt-3 float-end" (click)="enviarExperiencia()">Enviar</button>
+      </form>
+  </div>

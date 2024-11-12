@@ -19,10 +19,10 @@ export class HeaderComponent {
   ngOnInit(): void {
     this.authService.getLoggedUser().subscribe(user => {
       this.isLoggedIn = !!user;
-      // console.log("user",user);
+       console.log("user",user);
       this.authService.getUserRole().subscribe(role => {
         this.userLoggedRole = role;
-        // console.log("this.userLoggedRole",this.userLoggedRole );
+         console.log("this.userLoggedRole",this.userLoggedRole );
       })
     });
   }

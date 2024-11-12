@@ -1,0 +1,41 @@
+<div class="container">
+    <div *ngIf="!cargando" >
+        <div class="section-tittle section-tittle2 mt-3">
+            <span>Especialidades:</span>
+        </div>
+        <div class="especialidades-grid ml-5 mb-5 mt-5" >
+            <div *ngFor="let especialidad of especialidades" class="especialidad-item">
+                <button (click)="seleccionarEspecialidad(especialidad)" title="{{especialidad.especialidad}}">
+                    <!-- <div class="nombre-especialidad">{{especialidad.especialidad}}</div> -->
+                    <img [src]="especialidad.urlFoto ? especialidad.urlFoto : '../../../../../assets/especialidad/especialidadPorDefecto.png'" alt="{{especialidad.nombre}}">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!cargando">
+        <div class="section-tittle section-tittle2 mt-3">
+            <span>Especialistas:</span>
+        </div>
+        <div class="especialidades-grid ml-5 mb-5 mt-5" >
+            <div *ngFor="let especialista of especialistasFiltrados" class="especialidad-item">
+                <button (click)="seleccionarEspecialista(especialista)">
+                    <div class="nombre-especialidad">{{especialista.apellido}}</div>
+                    <img [src]="especialista.urlFoto" alt="{{especialista.apellido}}">
+                </button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="indice===2 && !cargando">
+        <div class="section-tittle section-tittle2 mt-3">
+            <span>Pacientes:</span>
+        </div>
+        <div class="especialidades-grid ml-5 mb-5 mt-5" >
+            <div *ngFor="let paciente of pacientes" class="especialidad-item">
+                <button (click)="seleccionarPaciente(paciente)">
+                <img [src]="paciente.urlFotos[0]" alt="{{paciente.apellido}}">
+                <div class="nombre-especialidad">{{paciente.apellido}}</div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

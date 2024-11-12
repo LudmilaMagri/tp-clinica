@@ -1,0 +1,151 @@
+<div class="spinner-container" *ngIf="cargando">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div class="container mt-3 p-3 border rounded"  *ngIf="!cargando">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Turnos</h1>
+        </div>
+    </div>
+    <form [formGroup]="form">
+        <div class="p-3">
+            <section class="col-12">
+                <button type="button" class="btn btn-warning ml-2 mb-3 mt-3" data-bs-toggle="modal" data-bs-target="#filtrosModal" (click)="filtrar()">Filtrar</button>
+                <button type="button" class="btn btn-warning ml-2 mb-3 mt-3" (click)="limpiarFiltros()">Limpiar filtros</button>
+            </section>
+            <div class="row">
+                <div class="col-12">
+                    <div class="row ml-3">
+                        <h2 class="d-inline">Listado de turnos:</h2>
+                    </div>
+                    <div class="table-responsive mt-3">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Horario</th>
+                                    <th *ngIf="usuario?.role !== 'Paciente'">Paciente</th>
+                                    <th *ngIf="usuario?.role !== 'Especialista'">Especialista</th>
+                                    <th>Especialidad</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let element of lista">
+                                    <td>{{element.fecha | date}}</td>
+                                    <td>{{element.horario}}</td>
+                                    <td *ngIf="usuario?.role !== 'Paciente'">
+                                        {{element.paciente.nombre}} {{element.paciente.apellido}} 
+                                        <button type="button" class="btn btn-dark btn-sm ml-1" title="Ver Paciente" data-bs-toggle="modal" data-bs-target="#pacienteModal" (click)="verPaciente(element)">
+                                        </button>
+                                    </td>
+                                    <td *ngIf="usuario?.role !== 'Especialista'">
+                                        {{element.especialista}}
+                                        <button type="button" class="btn btn-dark btn-sm ml-1" title="Ver Especialista" data-bs-toggle="modal" data-bs-target="#especialistaModal" (click)="verEspecialista(element)">
+                                        </button>
+                                    </td>
+                                    <td>{{element.especialidad}}</td>
+                                    <td>{{element.estado}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm ml-2" (click)="cancelarTurno(element)" *ngIf="(usuario.role === 'Paciente' && element.estado !=='Realizado' && element.estado !=='Cancelado' && element.estado !=='Rechazado' ) || ( usuario.role === 'Administrador' && element.estado ==='Pendiente') ||   (usuario.role === 'Especialista' && element.estado ==='Aceptado')">
+                                            <i>cancel</i>
+                                        </button>
+                                        <button type="button" class="btn btn-info btn-sm ml-2" (click)="verComentario(element)" *ngIf="element.estado ==='Cancelado' || element.estado ==='Rechazado' || element.estado ==='Realizado' ">
+                                            <i>Ver Comentario</i>
+                                        </button>
+                                        <button type="button" class="btn btn-success btn-sm ml-2" data-bs-toggle="modal" data-bs-target="#encuestaPacienteModal" (click)="completarEncuesta(element)" *ngIf="usuario.role === 'Paciente' && element.estado ==='Realizado' && element.comentario">
+                                            <i>Encuesta</i>
+                                        </button>
+                                        <!-- <button type="button" class="btn btn-warning btn-sm ml-2" (click)="completarExperiencia(element)" *ngIf="usuario.role === 'Paciente' && element.estado ==='Realizado'">
+                                            <i>Resena</i>
+                                        </button> -->
+                                        <button type="button" class="btn btn-danger btn-sm ml-2" (click)="rechazarTurno(element)" *ngIf="usuario.role === 'Especialista' && element.estado ==='Pendiente'">
+                                            <i>Rechazar</i>
+                                        </button>
+                                        <button type="button" class="btn btn-warning btn-sm ml-2" (click)="aceptarTurno(element)" *ngIf="usuario.role === 'Especialista' && element.estado ==='Pendiente'">
+                                            <i>Aceptar</i>
+                                        </button>
+                                        <button type="button" class="btn btn-success btn-sm ml-2" data-bs-toggle="modal" data-bs-target="#finalizarTurnoModal" (click)="finalizarTurno(element)" *ngIf="usuario.role === 'Especialista' && element.estado ==='Aceptado'">
+                                            <i>Finalizar</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- Modal Pacientes -->
+<div class="modal fade" id="pacienteModal" #pacienteModal tabindex="-1" role="dialog" aria-labelledby="pacienteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <app-detalles-usuario [usuario]="pacienteTurnoSeleccionado"></app-detalles-usuario>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Especialistas -->
+<div class="modal fade" id="especialistaModal" #especialistaModal tabindex="-1" role="dialog" aria-labelledby="especialistaModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <app-detalles-usuario [usuario]="especialistaTurnoSeleccionado"></app-detalles-usuario>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Encuesta Paciente -->
+<div class="modal fade" id="encuestaPacienteModal" #encuestaPacienteModal tabindex="-1" role="dialog" aria-labelledby="encuestaPacienteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" *ngIf="isEncuestaPacienteModalOpen">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <app-encuesta [turnoSeleccionado]="turnoSeleccionado"></app-encuesta>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Finalizar Turno -->
+<div class="modal fade" id="finalizarTurnoModal" #finalizarTurnoModal tabindex="-1" role="dialog" aria-labelledby="finalizarTurnoModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" *ngIf="isFinalizarTurnoModalOpen">
+            <div class="modal-body">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" (click)="cerrarFinalizarTurnoModal()">Finalizar Turno</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Filtros -->
+<div class="modal fade" id="filtrosModal" #filtrosModal tabindex="-1"  aria-labelledby="filtrosModalLabel" 
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" >
+            <div class="modal-body">
+                <ng-container *ngIf="isFiltrosModalOpen">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cerrarFiltrosModal()"></button>
+                    <!--<app-filtro [listaTurnos]="turnos" (aplicarFiltrosEmitter)="aplicarFiltros($event)"></app-filtro> -->
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,18 +1,10 @@
-// #welcome-container {
-//     height: 100%;
-//     min-height: 80vh;
-//     background-image: url('../../../assets/back.jpg');
-//     background-repeat: no-repeat;
-//     background-size:cover;
-// }
 
-/* Estilos generales */
 #welcome-container {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-image: url('../../../assets/back.jpg'); /* Reemplaza con tu URL de fondo */
+    background-image: url('../../../assets/back.jpg'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

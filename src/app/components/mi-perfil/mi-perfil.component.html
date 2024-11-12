@@ -1,0 +1,173 @@
+<div class="container mt-3">
+    <div class="row">
+      <div class="col-12">
+        <app-detalles-usuario [usuario]="especialista"></app-detalles-usuario>
+      </div>
+    </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h1 class="ml-3">Mis horarios</h1>
+        </div>
+      </div>
+      <form [formGroup]="form">
+        <div class="card shadow-sm mt-3 mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 m-3">
+                <div class="d-flex justify-content-start align-items-center">
+                  <button class="btn btn-primary ml-3 mb-3" (click)="guardarTurnos()">Guardar horarios</button>
+                </div>
+              </div>
+              <div class="col-12 m-3" style="width: 100%; overflow-x: auto; white-space: nowrap; max-width: 95%;">
+                <ul class="list-unstyled">
+                  <li class="mb-3">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="lunes" formControlName="lunes">
+                      <label class="form-check-label ml-2" for="lunes">Lunes</label>
+                    </div>
+                    <div class="form-group mt-2">
+                      <label for="lunesDesde">Horario desde:</label>
+                      <input type="time" class="form-control ml-2" id="lunesDesde" formControlName="lunesDesde">
+                      <label for="lunesHasta" class="ml-2">hasta:</label>
+                      <input type="time" class="form-control ml-2" id="lunesHasta" formControlName="lunesHasta">
+                    </div>
+                    <div class="form-group">
+                      <label for="lunesEspecialidad" class="ml-2">Especialidades:</label>
+                      <select class="form-control ml-2" id="lunesEspecialidad" formControlName="lunesEspecialidad">
+                        <option *ngFor="let reg of especialidades" [value]="reg">{{ reg }}</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="duracionTurnoLunes" class="ml-2">Duración del turno (en minutos) :</label>
+                      <input type="number" class="form-control ml-2" id="duracionTurnoLunes" formControlName="duracionTurnoLunes">
+                      <span *ngIf="(form.controls['duracionTurnoLunes'].errors?.['min'] || form.controls['duracionTurnoLunes'].errors?.['max']) && form.controls['duracionTurnoLunes'].touched" style="color: red;">Duración fuera de rango: (30-60) min</span>
+                      <span *ngIf="(form.controls['lunesDesde'].errors?.['timeRange'] || form.controls['lunesHasta'].errors?.['timeRange'])" style="color: red;">Horario fuera de rango: (08:00-19:00).</span>
+                    </div>
+                  </li>
+                  <li class="mb-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="martes" formControlName="martes">
+                        <label class="form-check-label ml-2" for="martes">Martes</label>
+                      </div>
+                      <div class="form-group mt-2">
+                        <label for="martesDesde">Horario desde:</label>
+                        <input type="time" class="form-control ml-2" id="martesDesde" formControlName="martesDesde">
+                        <label for="martesHasta" class="ml-2">hasta:</label>
+                        <input type="time" class="form-control ml-2" id="martesHasta" formControlName="martesHasta">
+                      </div>
+                      <div class="form-group">
+                        <label for="martesEspecialidad" class="ml-2">Especialidades:</label>
+                        <select class="form-control ml-2" id="martesEspecialidad" formControlName="martesEspecialidad">
+                          <option *ngFor="let reg of especialidades" [value]="reg">{{ reg }}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="duracionTurnomartes" class="ml-2">Duración del turno (en minutos) :</label>
+                        <input type="number" class="form-control ml-2" id="duracionTurnoMartes" formControlName="duracionTurnoMartes">
+                        <span *ngIf="(form.controls['duracionTurnoMartes'].errors?.['min'] || form.controls['duracionTurnoMartes'].errors?.['max']) && form.controls['duracionTurnomartes'].touched" style="color: red;">Duración fuera de rango: (30-60) min</span>
+                        <span *ngIf="(form.controls['martesDesde'].errors?.['timeRange'] || form.controls['martesHasta'].errors?.['timeRange'])" style="color: red;">Horario fuera de rango: (08:00-19:00).</span>
+                      </div>
+                    </li>
+                    <li class="mb-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="miercoles" formControlName="miercoles">
+                        <label class="form-check-label ml-2" for="miercoles">Miercoles</label>
+                      </div>
+                      <div class="form-group mt-2">
+                        <label for="miercolesDesde">Horario desde:</label>
+                        <input type="time" class="form-control ml-2" id="miercolesDesde" formControlName="miercolesDesde">
+                        <label for="miercolesHasta" class="ml-2">hasta:</label>
+                        <input type="time" class="form-control ml-2" id="miercolesHasta" formControlName="miercolesHasta">
+                      </div>
+                      <div class="form-group">
+                        <label for="miercolesEspecialidad" class="ml-2">Especialidades:</label>
+                        <select class="form-control ml-2" id="miercolesEspecialidad" formControlName="miercolesEspecialidad">
+                          <option *ngFor="let reg of especialidades" [value]="reg">{{ reg }}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="duracionTurnoMiercoles" class="ml-2">Duración del turno (en minutos) :</label>
+                        <input type="number" class="form-control ml-2" id="duracionTurnoMiercoles" formControlName="duracionTurnoMiercoles">
+                        <span *ngIf="(form.controls['duracionTurnoMiercoles'].errors?.['min'] || form.controls['duracionTurnoMiercoles'].errors?.['max']) && form.controls['duracionTurnoMiercoles'].touched" style="color: red;">Duración fuera de rango: (30-60) min</span>
+                        <span *ngIf="(form.controls['miercolesDesde'].errors?.['timeRange'] || form.controls['miercolesHasta'].errors?.['timeRange'])" style="color: red;">Horario fuera de rango: (08:00-19:00).</span>
+                      </div>
+                    </li>
+                    <li class="mb-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="jueves" formControlName="jueves">
+                        <label class="form-check-label ml-2" for="jueves">Jueves</label>
+                      </div>
+                      <div class="form-group mt-2">
+                        <label for="juevesDesde">Horario desde:</label>
+                        <input type="time" class="form-control ml-2" id="juevesDesde" formControlName="juevesDesde">
+                        <label for="juevesHasta" class="ml-2">hasta:</label>
+                        <input type="time" class="form-control ml-2" id="juevesHasta" formControlName="juevesHasta">
+                      </div>
+                      <div class="form-group">
+                        <label for="juevesEspecialidad" class="ml-2">Especialidades:</label>
+                        <select class="form-control ml-2" id="juevesEspecialidad" formControlName="juevesEspecialidad">
+                          <option *ngFor="let reg of especialidades" [value]="reg">{{ reg }}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="duracionTurnoJueves" class="ml-2">Duración del turno (en minutos) :</label>
+                        <input type="number" class="form-control ml-2" id="duracionTurnoJueves" formControlName="duracionTurnoJueves">
+                        <span *ngIf="(form.controls['duracionTurnoJueves'].errors?.['min'] || form.controls['duracionTurnoJueves'].errors?.['max']) && form.controls['duracionTurnoJueves'].touched" style="color: red;">Duración fuera de rango: (30-60) min</span>
+                        <span *ngIf="(form.controls['juevesDesde'].errors?.['timeRange'] || form.controls['juevesHasta'].errors?.['timeRange'])" style="color: red;">Horario fuera de rango: (08:00-19:00).</span>
+                      </div>
+                    </li>
+                    <li class="mb-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="viernes" formControlName="viernes">
+                        <label class="form-check-label ml-2" for="viernes">viernes</label>
+                      </div>
+                      <div class="form-group mt-2">
+                        <label for="viernesDesde">Horario desde:</label>
+                        <input type="time" class="form-control ml-2" id="viernesDesde" formControlName="viernesDesde">
+                        <label for="viernesHasta" class="ml-2">hasta:</label>
+                        <input type="time" class="form-control ml-2" id="viernesHasta" formControlName="viernesHasta">
+                      </div>
+                      <div class="form-group">
+                        <label for="viernesEspecialidad" class="ml-2">Especialidades:</label>
+                        <select class="form-control ml-2" id="viernesEspecialidad" formControlName="viernesEspecialidad">
+                          <option *ngFor="let reg of especialidades" [value]="reg">{{ reg }}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="duracionTurnoViernes" class="ml-2">Duración del turno (en minutos) :</label>
+                        <input type="number" class="form-control ml-2" id="duracionTurnoViernes" formControlName="duracionTurnoViernes">
+                        <span *ngIf="(form.controls['duracionTurnoViernes'].errors?.['min'] || form.controls['duracionTurnoViernes'].errors?.['max']) && form.controls['duracionTurnoViernes'].touched" style="color: red;">Duración fuera de rango: (30-60) min</span>
+                        <span *ngIf="(form.controls['viernesDesde'].errors?.['timeRange'] || form.controls['viernesHasta'].errors?.['timeRange'])" style="color: red;">Horario fuera de rango: (08:00-19:00).</span>
+                      </div>
+                    </li>
+                    <li class="mb-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="sabado" formControlName="sabado">
+                        <label class="form-check-label ml-2" for="sabado">Sabado</label>
+                      </div>
+                      <div class="form-group mt-2">
+                        <label for="sabadoDesde">Horario desde:</label>
+                        <input type="time" class="form-control ml-2" id="sabadoDesde" formControlName="sabadoDesde">
+                        <label for="sabadoHasta" class="ml-2">hasta:</label>
+                        <input type="time" class="form-control ml-2" id="sabadoHasta" formControlName="sabadoHasta">
+                      </div>
+                      <div class="form-group">
+                        <label for="sabadoEspecialidad" class="ml-2">Especialidades:</label>
+                        <select class="form-control ml-2" id="sabadoEspecialidad" formControlName="sabadoEspecialidad">
+                          <option *ngFor="let reg of especialidades" [value]="reg">{{ reg }}</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="duracionTurnoSabado" class="ml-2">Duración del turno (en minutos) :</label>
+                        <input type="number" class="form-control ml-2" id="duracionTurnoSabado" formControlName="duracionTurnoSabado">
+                        <span *ngIf="(form.controls['duracionTurnoSabado'].errors?.['min'] || form.controls['duracionTurnoSabado'].errors?.['max']) && form.controls['duracionTurnoSabado'].touched" style="color: red;">Duración fuera de rango: (30-60) min</span>
+                        <span *ngIf="(form.controls['sabadoDesde'].errors?.['timeRange'] || form.controls['sabadoHasta'].errors?.['timeRange'])" style="color: red;">Horario fuera de rango: (08:00-19:00).</span>
+                      </div>
+                    </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>

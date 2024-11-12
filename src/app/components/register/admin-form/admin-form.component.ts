@@ -5,12 +5,11 @@ import { AuthService } from '../../../servicess/auth.service';
 import { FirestoreService } from '../../../servicess/firestore.service';  
 import Swal from 'sweetalert2';
 import { ROLES_ENUM } from '../../../enums/roles';
-import { Administradr } from '../../../models/models';
+import { Administrador } from '../../../models/models';
 @Component({
   selector: 'app-admin-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './admin-form.component.html',
   styleUrl: './admin-form.component.scss'
 })
@@ -57,7 +56,7 @@ export class AdminFormComponent {
         title: 'Cargando...',
         allowOutsideClick: false,
         didOpen: () => {
-          Swal.showLoading(null);
+          Swal.showLoading(Swal.getConfirmButton());
         },
       });
       let credenciales = await this.authService.SingUp(
@@ -68,7 +67,7 @@ export class AdminFormComponent {
       console.log("credenciales",credenciales);
       let fotos: string;
       fotos = await this.firestoreService.guardarFoto(this.imagenes[0], "usuarios");
-      let paciente: Administradr = {
+      let admin: Administrador = {
         id: credenciales,
         nombre: this.form.value.nombre,
         apellido: this.form.value.apellido,
@@ -78,10 +77,10 @@ export class AdminFormComponent {
         password: this.form.value.clave,
         cuentaHabilitada: false,
         urlFoto: fotos,
-        rol: ROLES_ENUM.PACIENTE,
+        rol: ROLES_ENUM.ADMIN,
       };
-      console.log("paciente", paciente);
-      this.firestoreService.save(paciente, 'administradores');
+     // console.log("paciente", paciente);
+      this.firestoreService.save(admin, 'administradores');
       this.form.reset();
       Swal.close();
     } else {

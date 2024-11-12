@@ -6,16 +6,25 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <h2>Clinica Online</h2>
         <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
-          <li class="nav-item">
+          <li *ngIf="userLoggedRole?.role == 'Administrador'" class="nav-item">
             <a class="nav-link mx-lg-2" aria-current="page" href="/usuarios" (click)="closeMenu()">Usuarios</a>
+          </li>
+          <li *ngIf="userLoggedRole?.role == 'Paciente' || userLoggedRole?.role == 'Especialista'" class="nav-item">
+            <a class="nav-link mx-lg-2" href="/mi-perfil" (click)="closeMenu()">Mi perfil</a>
+          </li>
+          <li>
+            <a class="nav-link mx-lg-2" routerLink="turnos" (click)="closeMenu()">Turnos</a>
+          </li>
+          <li>
+            <a class="nav-link mx-lg-2" routerLink="turnos/mis-turnos" (click)="closeMenu()">Mis turnos</a>
           </li>
           
         </ul>
       </div>
       <!-- si se logea dejar uno solo que sea de logout -->
-      <a href="#" class="login-button" routerLink="/login">Log In</a>
-      <a href="#" class="login-button" routerLink="/register">Register</a>
-      <!-- <a href="#" class="login-button" (click)="logOut()">LogOut</a> -->
+      <a  href="#" class="login-button" routerLink="/login">Ingresar</a>
+      <a  href="#" class="login-button" routerLink="/register">Registrarse</a>
+      <a  href="#" class="login-button" (click)="logOut()">Cerrar sesión</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

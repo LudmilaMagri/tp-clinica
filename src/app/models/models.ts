@@ -26,7 +26,7 @@ export interface Especialista {
   rol: ROLES_ENUM;
   fechaAlta: string;
 }
-export interface Administradr {
+export interface Administrador {
   id:string;
   nombre: string;
   apellido: string,

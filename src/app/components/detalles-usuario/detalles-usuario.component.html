@@ -1,0 +1,14 @@
+<div class="card shadow-sm mt-3 mb-3 p-3" *ngIf="usuario">
+  <div class="d-flex align-items-center mb-3">
+    <img *ngIf="usuario.rol !== 'paciente'" [src]="usuario.urlFoto" alt="Imagen de perfil 1" class="img-fluid rounded mr-3" style="height: 100px; width: auto;">
+    <ng-container *ngIf="usuario.rol === 'paciente'">
+      <img [src]="usuario.urlFotos[0]" alt="Imagen de perfil 2" class="img-fluid rounded mr-2" style="height: 100px; width: auto;">
+      <img [src]="usuario.urlFotos[1]" alt="Imagen de perfil 3" class="img-fluid rounded" style="height: 100px; width: auto;">
+    </ng-container>
+  </div>
+  <h1 class="h4">Nombre: {{usuario.nombre}} {{usuario.apellido}}</h1>
+  <p class="mb-1"><strong>Correo electrónico:</strong> {{usuario.email}}</p>
+  <p class="mb-1"><strong>Edad:</strong> {{usuario.edad}}</p>
+  <p class="mb-1"><strong>DNI:</strong> {{usuario.dni}}</p>
+  <p *ngIf="usuario.rol === 'paciente'" class="mb-0"><strong>Obra Social:</strong> {{usuario.obraSocial}}</p>
+</div>

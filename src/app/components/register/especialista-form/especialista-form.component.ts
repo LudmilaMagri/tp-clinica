@@ -81,7 +81,7 @@ export class EspecialistaFormComponent {
         title: 'Cargando...',
         allowOutsideClick: false,
         didOpen: () => {
-          Swal.showLoading(null);
+          Swal.showLoading(Swal.getConfirmButton());
         }
       });
       let credenciales = await this.authService.SingUp(

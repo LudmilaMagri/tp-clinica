@@ -5,7 +5,7 @@
             <div class="col-md-6">
                 <div class="card-title">
                     <div class="row">
-                        <h3>Pacientes:</h3>
+                        <h3 class ="titulo">Pacientes:</h3>
                         <div *ngIf="cargando" class="spinner-border ml-3" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -49,7 +49,7 @@
         </div>
         <div class="col-lg-12 col-md-12 mt-3">
             <div class="form-box subject-icon">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pacienteModal">
+                <button type="button" class="btn btn-agregar" data-bs-toggle="modal" data-bs-target="#pacienteModal">
                     Agregar paciente
                 </button>
             </div>
@@ -61,7 +61,7 @@
             <div class="col-md-6">
                 <div class="card-title">
                     <div class="row">
-                        <h3>Especialistas:</h3>
+                        <h3 class ="titulo">Especialistas:</h3>
                         <div *ngIf="cargando" class="spinner-border ml-3" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -101,7 +101,7 @@
                             <img [src]="element?.urlFoto" alt="" height="50px" width="auto">
                         </td>
                         <td>
-                            <input type="checkbox" class="custom-checkbox" (change)="habilitarEspecialista(element)"
+                            <input type="checkbox" class="custom-checkbox" (change)="habilitarUsuario('especialista', element)"
                                 [checked]="element.cuentaHabilitada">
                         </td>
                     </tr>
@@ -110,7 +110,7 @@
         </div>
         <div class="col-lg-12 col-md-12 mt-3">
             <div class="form-box subject-icon">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                <button type="button" class="btn btn-agregar" data-bs-toggle="modal"
                     data-bs-target="#especialistasModal">
                     Agregar Especialista
                 </button>
@@ -123,7 +123,7 @@
             <div class="col-md-6">
                 <div class="card-title">
                     <div class="row">
-                        <h3>Administradores:</h3>
+                        <h3 class ="titulo">Administradores:</h3>
                         <div *ngIf="cargando" class="spinner-border ml-3" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -160,7 +160,7 @@
         </div>
         <div class="col-lg-12 col-md-12 mt-3">
             <div class="form-box subject-icon">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adminModal">
+                <button type="button" class="btn btn-agregar" data-bs-toggle="modal" data-bs-target="#adminModal">
                     Agregar Admin
                 </button>
             </div>
@@ -192,6 +192,7 @@
         </div>
     </div>
 </div>
+
 <!-- Modal Especialistas -->
 <div class="modal fade" id="adminModal" #adminModal tabindex="-1" role="dialog" aria-labelledby="adminModalLabel"
     aria-hidden="true">

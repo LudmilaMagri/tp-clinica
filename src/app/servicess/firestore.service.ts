@@ -1,11 +1,15 @@
 import { Injectable, inject } from '@angular/core';
-import { DocumentSnapshot, Firestore, addDoc, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
+import { DocumentSnapshot, Firestore, addDoc, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where,DocumentData } from '@angular/fire/firestore';
 import { Storage, getDownloadURL, ref, uploadBytes, uploadBytesResumable } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
   private storage = inject(Storage);
+
+
   constructor(private firestore: Firestore) {}
   save(data: any, path: string) {
     const col = collection(this.firestore, path);
@@ -62,5 +66,52 @@ export class FirestoreService {
           return imgUrl;
        });
     })
+  }
+
+  async getEspecialistaPorEmail(email:string):Promise<any>{
+    const mensajeRef = collection(this.firestore,'especialistas')
+      const q = query(mensajeRef,where("email",'==',email))
+      const snapshot = await getDocs(q);
+      if (!snapshot.empty) {
+        const datosEspecialista = snapshot.docs[0].data() as DocumentData;
+        return datosEspecialista;
+      } else {
+        return null; // Retornar null si no se encuentra ningún documento
+      }
+  }
+  
+  async updateTurno (data: any, path:string){
+    let retorno = false;
+    const usuarioRef = collection(this.firestore,path);
+      const documento = doc(usuarioRef,data.id)
+      await updateDoc(documento,data)
+        .then((respuesta)=>{
+          retorno = true;
+        })
+        .catch((error) => {
+      });
+      return retorno;
+  }
+  
+  async updateWithId(data: any, path:string){
+    let retorno = false;
+    const usuarioRef = collection(this.firestore,path);
+    console.log("usuarioRef", data.id);
+      const documento = doc(usuarioRef,data.id)
+      await updateDoc(documento,data)
+        .then((respuesta)=>{
+          retorno = true;
+        })
+        .catch((error) => {
+      });
+      return retorno;
+  }
+  async saveWithId(data: any, path: string) {
+    const col = collection(this.firestore, path);
+    console.log("Col",col);
+    const docs = doc(col);
+    data.id = docs.id;
+    console.log(data);
+    setDoc(docs, data);
   }
 }

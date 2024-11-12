@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, onAuthStateChanged, AuthError, authState, sendEmailVerification
-} from '@angular/fire/auth';
+import {Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, onAuthStateChanged, AuthError, authState, 
+  sendEmailVerification} from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { format } from 'date-fns';
@@ -39,7 +38,7 @@ export class AuthService {
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Logged In Succesfully',
+            title: 'Bienvenido/a',
           });
           this.logService.logIntoDb('logins', {
             user: email,

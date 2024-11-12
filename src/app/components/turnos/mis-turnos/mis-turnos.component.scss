@@ -1,0 +1,105 @@
+.card-container {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .scroll-container {
+    display: flex;
+  }
+  
+  .card {
+    min-width: 200px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    padding: 10px;
+  }
+  
+  .card-header {
+    font-weight: bold;
+    background-color: #f0f0f0;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .card-body {
+    padding: 10px;
+  }
+  
+  .hora {
+    padding: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+  }
+
+  .boton{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+/* filtros */
+
+.especialidades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.especialidad-item {
+  text-align: center;
+}
+
+.button-filtro {
+  border: 2px solid #ccc;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.button-filtro:hover {
+  background-color: #665dcd;
+}
+
+.button-filtro.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+img {
+  width: 100%;
+  max-height: 120px;
+  object-fit: cover;
+  border-bottom: 2px solid #ccc; /* Línea bajo la imagen */
+  margin-bottom: 8px; /* Espaciado entre la imagen y el nombre */
+}
+
+.nombre-especialidad {
+  margin-top: 8px;
+  color: black;
+}
+
+.spinner-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}

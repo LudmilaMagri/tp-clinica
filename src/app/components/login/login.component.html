@@ -1,11 +1,16 @@
-
-<div class="container text-center">
+<div class="spinner-container" *ngIf="cargandoAccesoRapido">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+  
+  <div class="container text-center" id="container" >
     <div class="row">
       <div class="d-flex justify-content-center">
         <mat-card>
           <div class="about-caption mb-50">
             <div class="section-tittle section-tittle2 mb-35">
-              <h2>Ingrese</h2>
+              <h2>Ingrese sus datos</h2>
             </div>
             <form id="contact-form" [formGroup]="form">
               <div class="row">
@@ -13,63 +18,74 @@
                   <div class="form-box subject-icon mb-30">
                     <input class="input-field" type="Email" formControlName="email" name="email" placeholder="Email">
                     <span *ngIf="form.controls['email'].errors?.['required'] && form.controls['email'].touched"
-                          class="error-message"> Email es requerido</span>
+                          class="error-message">Email es requerido</span>
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12">
                   <div class="form-box subject-icon mb-30">
                     <input appFocusBorder class="input-field" type="password" formControlName="clave" name="clave" placeholder="Clave">
                     <span *ngIf="form.controls['clave'].errors?.['required'] && form.controls['clave'].touched"
-                          class="error-message"> Clave es requerido</span>
+                          class="error-message">Clave es requerido</span>
                   </div>
                 </div>
               </div>
+              <!-- <div class="row mb-1 mt-3">
+                <ngx-recaptcha2 #captchaElem
+                                [siteKey]="siteKey"
+                                (success)="executeRecaptchaVisible($event)"
+                                formControlName="recaptcha">
+                </ngx-recaptcha2>
+              </div> -->
             </form>
             <div class="about-btn1 mb-30">
               <div class="row ml-1">
-                <button style="border: 1px solid #ccc; padding: 10px;" class="btn about-btn" (click)="ingresar()">Ingresar<i class="ti-arrow-right"></i></button>
-                <span *ngIf="!cuentaHabilitada"
-                      class="error-message"> Su cuenta todavía no fue habilitada.</span>
+                <button style="border: 1px solid #ccc; padding: 10px;" class="btn about-btn"
+                        (click)="ingresar()">Ingresar<i class="ti-arrow-right"></i></button>
+                <span *ngIf="!cuentaHabilitada" class="error-message">Su cuenta todavía no fue habilitada.</span>
               </div>
             </div>
+  
+            <!-- Botones de Acceso Rápido -->
+            <div class="container-btn-rapidos" *ngIf="cargandoAccesoRapido">
+              <mat-progress-spinner mode="indeterminate" diameter="50" color="primary" class="ml-3 mt-3"></mat-progress-spinner>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center">
+              <div>
+                <button title="Admin" class="profile-button m-1" (click)="ingresoAdmin()">
+                  <img [src]="admin?.urlFoto" alt="fotoAdmin" >
+                </button>
+              </div>
+              <div>
+                <button title="Especialista" class="profile-button m-1" (click)="ingresoEspecialista(1)">
+                  <img [src]="especialista1?.urlFoto" alt="fotoEsp1" (load)="onImageLoad()">
+                </button>
+              </div>
+              <div>
+                <button title="Especialista 2" class="profile-button m-1" (click)="ingresoEspecialista(2)">
+                  <img [src]="especialista2?.urlFoto" alt="fotoEsp2" (load)="onImageLoad()">
+                </button>
+              </div>
+              <div>
+                <button title="Paciente" class="profile-button m-1" (click)="ingresoPaciente(1)">
+                  <img [src]="paciente1?.urlFotos[0]" alt="fotoPac1" (load)="onImageLoad()">
+                </button>
+              </div>
+              <div>
+                <button title="Paciente 2" class="profile-button m-1" (click)="ingresoPaciente(2)">
+                  <img [src]="paciente2?.urlFotos[0]" alt="fotoPac2" (load)="onImageLoad()"> 
+                </button>
+              </div>
+              <div>
+                <button title="Paciente 3" class="profile-button m-1" (click)="ingresoPaciente(3)">
+                  <img [src]="paciente3?.urlFotos[0]" alt="fotoPac3" (load)="onImageLoad()">
+                </button>
+              </div>
+            </div>
+            <!-- Fin de los Botones de Acceso Rápido -->
+            
           </div>
         </mat-card>
       </div>
     </div>
-<!-- Botones de Acceso Rápido -->
-    <div class="container-btn-rapidos" *ngIf="cargandoAccesoRapido">
-      <mat-progress-spinner mode="indeterminate" diameter="50" color="primary" class="ml-3 mt-3"></mat-progress-spinner>
-    </div>
-    <div class="d-flex flex-wrap justify-content-end">
-      <div>
-        <button title="Admin" class="profile-button m-1" (click)="ingresoAdmin()">
-          <img [src]="admin?.urlFoto" alt="fotoAdmin">
-        </button>
-      </div>
-      <div>
-        <button title="Especialista" class="profile-button m-1" (click)="ingresoEspecialista(1)">
-          <img [src]="especialista1?.urlFoto" alt="fotoEsp1">
-        </button>
-      </div>
-      <div>
-        <button title="Especialista 2" class="profile-button m-1" (click)="ingresoEspecialista(2)">
-          <img [src]="especialista2?.urlFoto" alt="fotoEsp2">
-        </button>
-      </div>
-      <div>
-        <button title="Paciente" class="profile-button m-1" (click)="ingresoPaciente(1)">
-          <img [src]="paciente1?.urlFotos[0]" alt="fotoPac1">
-        </button>
-      </div>
-      <div>
-        <button title="Paciente 2" class="profile-button m-1" (click)="ingresoPaciente(2)">
-          <img [src]="paciente2?.urlFotos[0]" alt="fotoPac2">
-        </button>
-      </div>
-      <div>
-        <button title="Paciente 3" class="profile-button m-1" (click)="ingresoPaciente(3)">
-          <img [src]="paciente3?.urlFotos[0]" alt="fotoPac3">
-        </button>
-      </div>
-    </div>
   </div>
+  
